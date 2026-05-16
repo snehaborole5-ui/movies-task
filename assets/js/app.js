@@ -26,6 +26,12 @@ let moviesArr = [
 
 ]
 
+const showModalBtn = document.getElementById('showModalBtn')
+const  backDrop = document.getElementById('backDrop')
+const  movieModel = document.getElementById('movieModel')
+
+const closeModal = [...document.querySelectorAll('.closeModal')]
+
 function setMovieRating(rating){
     if(rating >= 4){
         return 'badge-success'
@@ -75,4 +81,18 @@ moviesArr.forEach(movie => {
 
 movieContainer.innerHTML = result;
 
+function onModalShowHandler(){
+    backDrop.classList.add('active')
+    movieModel.classList.add('active')
+}
 
+showModalBtn.addEventListener('click',onModalShowHandler)
+
+const onModalHideHandler = () => {
+    backDrop.classList.remove('active');
+    movieModel.classList.remove('active');
+}
+
+closeModal.forEach(btn => {
+    btn.addEventListener('click',onModalHideHandler)
+})

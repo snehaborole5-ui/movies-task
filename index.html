@@ -35,7 +35,7 @@
                     </a>
                 </div>
                 <div class="col-6 d-flex justify-content-end align-items-center">
-                    <button class="btn btn-sm nfx-pri-btn">
+                    <button class="btn btn-sm nfx-pri-btn" id="showModalBtn">
                         Add Movie
                     </button>
                 </div>
@@ -105,7 +105,47 @@
         </div>
     </div>
    
-   
+    <div class="backDrop closeModal" id="backDrop"></div>
+    <div class="movieModel rounded-sm shadow-sm" id="movieModel">
+        <form>
+        <div class="card">
+            <div class="card header ">
+                <h3 class="m-0">Add Movie Details</h3>
+                <i class="fa-solid fa-xmark fa-2x closeModal" role="button"></i>
+            </div>
+            <div class="card-body">
+                
+                <div class="form-group">
+                    <label for="movieTitle">Movie Name</label>
+                    <input type="text" id="movieTitle" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="movieImg">Movie Image Url</label>
+                    <input  rows="4" type="text" id="movieImg" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="movieDescription">Movie Description</label>
+                    <textarea type="text" id="movieDescription" class="form-control">
+                   </textarea>
+                </div>
+                <div class="form-group">
+                    <label for="movieRating">Movie Rating</label>
+                    <input  type="text" id="movieRating" class="form-control">
+                </div>
+           
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <button class="btn nfx-sec-btn" type="submit">Add Movie</button>
+               <button class="btn nfx-pri-btn closeModal" type="button">Close</button>
+            </div>
+        </div>
+         </form>
+    </div>
+
+
+
+    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assets/js/app.js"></script>
 </body>
