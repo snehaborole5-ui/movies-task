@@ -34,6 +34,14 @@ function setMovieRating(rating){
     }
 }
 
+function snackBar(msg){
+    Swal.fire({
+    title : msg,
+    icon : 'success',
+    timer : 3000
+    })
+}
+
 const movieContainer = document.getElementById('movieContainer')
 
 function createMovieCards () {
@@ -112,9 +120,40 @@ movieForm.reset()
 moviesArr.unshift(NEW_MOVIE_OBJ)
 
 localStorage.setItem('moviesArr', JSON.stringify(moviesArr))
-createMovieCards(moviesArr)
-
+// createMovieCards(moviesArr) :: create only one card 
+let div = document.createElement('div')
+div.className = 'col-md-3 mb-3'
+div.innerHTML = `<div class="card movieCard" id="${NEW_MOVIE_OBJ.movieId}">
+                    <div class="card-header d-flex justify-content-between align-items-start">
+                        <h2>
+                        ${NEW_MOVIE_OBJ.movieTitle}
+                        </h2>
+                        <span class="badge ${setMovieRating(NEW_MOVIE_OBJ.movieRating)}">
+                        ${NEW_MOVIE_OBJ.movieRating}
+                        </span>    
+                    </div>
+                    <div class="card-body p-0">
+                        <figure>
+                            <img src="${NEW_MOVIE_OBJ.movieImg}"
+                            alt="${NEW_MOVIE_OBJ.movieTitle}"
+                            title="${NEW_MOVIE_OBJ.movieTitle}">
+                            <figcaption>
+                                <h4>${NEW_MOVIE_OBJ.movieTitle}</h4>
+                                <p>
+                                    ${NEW_MOVIE_OBJ.movieDescription}
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                   <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-sm nfx-sec-btn">Edit</button>
+                        <button class="btn btn-sm nfx-pri-btn">Remove</button>
+                    </div>
+                </div>
+`
+movieContainer.prepend(div)
 onModalHandler()
+snackBar(`The new movie ${NEW_MOVIE_OBJ.movieTitle} added successfully!!!`)
 }
 
 
