@@ -107,7 +107,7 @@
    
     <div class="backDrop closeModal" id="backDrop"></div>
     <div class="movieModel rounded-sm shadow-sm" id="movieModel">
-        <form>
+        <form id="movieForm">
         <div class="card">
             <div class="card header ">
                 <h3 class="m-0">Add Movie Details</h3>
@@ -131,7 +131,13 @@
                 </div>
                 <div class="form-group">
                     <label for="movieRating">Movie Rating</label>
-                    <input  type="text" id="movieRating" class="form-control">
+                    <select id="movieRating" class="form-control">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    </select>
                 </div>
            
             </div>

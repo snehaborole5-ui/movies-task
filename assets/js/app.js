@@ -1,5 +1,10 @@
 const cl = console.log;
 
+const movieForm= document.getElementById('movieForm')
+const movieTitle = document.getElementById('movieTitle')
+const movieImg = document.getElementById('movieImg')
+const movieDescription= document.getElementById('movieDescription')
+const movieRating = document.getElementById('movieRating')
 
 let moviesArr = []
 
@@ -31,7 +36,8 @@ function setMovieRating(rating){
 
 const movieContainer = document.getElementById('movieContainer')
 
-let result = ''
+function createMovieCards () {
+    let result = ''
 moviesArr.forEach(movie => {
     result += `<div class="col-md-3 mb-3">
                 <div class="card movieCard" id="${movie.movieId}">
@@ -68,18 +74,49 @@ moviesArr.forEach(movie => {
 
 movieContainer.innerHTML = result;
 
-function onModalShowHandler(){
-    backDrop.classList.add('active')
-    movieModel.classList.add('active')
+}
+createMovieCards()
+function onModalHandler(){
+    backDrop.classList.toggle('active')
+    movieModel.classList.toggle('active')
 }
 
-showModalBtn.addEventListener('click',onModalShowHandler)
+// function onModalShowHandler(){
+//     backDrop.classList.add('active')
+//     movieModel.classList.add('active')
+// }
 
-const onModalHideHandler = () => {
-    backDrop.classList.remove('active');
-    movieModel.classList.remove('active');
+showModalBtn.addEventListener('click',onModalHandler)
+
+// const onModalHideHandler = () => {
+//     backDrop.classList.remove('active');
+//     movieModel.classList.remove('active');
+// }
+
+// closeModal.forEach(btn => {
+//     btn.addEventListener('click',onModalHideHandler)
+// })
+
+function onMovieAddHandle(eve){
+    eve.preventDefault()
+    let NEW_MOVIE_OBJ = {
+        movieTitle : movieTitle.value,
+        movieImg : movieImg.value,
+        movieDescription : movieDescription.value,
+        movieRating : movieRating.value,
+        movieId : Date.now().toString()
+    }
+// cl(NEW_MOVIE_OBJ)
+movieForm.reset()
+
+moviesArr.unshift(NEW_MOVIE_OBJ)
+
+localStorage.setItem('moviesArr', JSON.stringify(moviesArr))
+createMovieCards(moviesArr)
+
+onModalHandler()
 }
 
-closeModal.forEach(btn => {
-    btn.addEventListener('click',onModalHideHandler)
-})
+
+
+movieForm.addEventListener('submit',onMovieAddHandle)
