@@ -3,7 +3,7 @@ const cl = console.log;
 
 let moviesArr = []
 
-
+// API Call to get DATA from DB 
 
 if(localStorage.getItem('moviesArr')){
     moviesArr = JSON.parse(localStorage.getItem('moviesArr'))
@@ -31,7 +31,8 @@ function setMovieRating(rating){
 
 const movieContainer = document.getElementById('movieContainer')
 
-let result = ''
+function createMovieCards () {
+    let result = ''
 moviesArr.forEach(movie => {
     result += `<div class="col-md-3 mb-3">
                 <div class="card movieCard" id="${movie.movieId}">
@@ -67,18 +68,26 @@ moviesArr.forEach(movie => {
 })
 
 movieContainer.innerHTML = result;
+}
+ createMovieCards()
 
-function onModalShowHandler(){
-    backDrop.classList.add('active')
-    movieModel.classList.add('active')
+
+function onModalHandler () {
+    backDrop.classList.toggle('active')
+    movieModel.classList.toggle('active')
 }
 
-showModalBtn.addEventListener('click',onModalShowHandler)
+// function onModalShowHandler(){
+//     backDrop.classList.add('active')
+//     movieModel.classList.add('active')
+// }
 
-const onModalHideHandler = () => {
-    backDrop.classList.remove('active');
-    movieModel.classList.remove('active');
-}
+showModalBtn.addEventListener('click',onModalHandler)
+
+// const onModalHideHandler = () => {
+//     backDrop.classList.remove('active');
+//     movieModel.classList.remove('active');
+// }
 
 closeModal.forEach(btn => {
     btn.addEventListener('click',onModalHideHandler)
