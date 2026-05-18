@@ -17,6 +17,7 @@ const showModalBtn = document.getElementById('showModalBtn')
 const  backDrop = document.getElementById('backDrop')
 const  movieModel = document.getElementById('movieModel')
 
+
 const closeModal = [...document.querySelectorAll('.closeModal')]
 
 function setMovieRating(rating){
