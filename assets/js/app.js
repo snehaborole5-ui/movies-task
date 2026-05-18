@@ -3,7 +3,7 @@ const cl = console.log;
 
 let moviesArr = []
 
-// API Call to get DATA from DB 
+
 
 if(localStorage.getItem('moviesArr')){
     moviesArr = JSON.parse(localStorage.getItem('moviesArr'))
@@ -16,7 +16,6 @@ cl(moviesArr)
 const showModalBtn = document.getElementById('showModalBtn')
 const  backDrop = document.getElementById('backDrop')
 const  movieModel = document.getElementById('movieModel')
-
 
 const closeModal = [...document.querySelectorAll('.closeModal')]
 
@@ -32,8 +31,7 @@ function setMovieRating(rating){
 
 const movieContainer = document.getElementById('movieContainer')
 
-function createMovieCards () {
-    let result = ''
+let result = ''
 moviesArr.forEach(movie => {
     result += `<div class="col-md-3 mb-3">
                 <div class="card movieCard" id="${movie.movieId}">
@@ -69,26 +67,18 @@ moviesArr.forEach(movie => {
 })
 
 movieContainer.innerHTML = result;
-}
- createMovieCards()
 
-
-function onModalHandler () {
-    backDrop.classList.toggle('active')
-    movieModel.classList.toggle('active')
+function onModalShowHandler(){
+    backDrop.classList.add('active')
+    movieModel.classList.add('active')
 }
 
-// function onModalShowHandler(){
-//     backDrop.classList.add('active')
-//     movieModel.classList.add('active')
-// }
+showModalBtn.addEventListener('click',onModalShowHandler)
 
-showModalBtn.addEventListener('click',onModalHandler)
-
-// const onModalHideHandler = () => {
-//     backDrop.classList.remove('active');
-//     movieModel.classList.remove('active');
-// }
+const onModalHideHandler = () => {
+    backDrop.classList.remove('active');
+    movieModel.classList.remove('active');
+}
 
 closeModal.forEach(btn => {
     btn.addEventListener('click',onModalHideHandler)
