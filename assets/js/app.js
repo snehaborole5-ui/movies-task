@@ -157,13 +157,25 @@ snackBar(`The new movie ${NEW_MOVIE_OBJ.movieTitle} added successfully!!!`)
 }
 
 function onMovieRemove(ele){
-    let REMOVE_ID = ele.closest('.movieCard').id 
-    let GET_INDEX = moviesArr.findIndex(m => m.movieId === REMOVE_ID)
+let REMOVE_ID = ele.closest('.movieCard').id 
+    Swal.fire({
+  title: `Do you want to remove the movie with id ${REMOVE_ID} ?`,
+  showCancelButton: true,
+  confirmButtonText: "Remove",
+  confirmButtonColor: '#e50914',
+  cancelButtonColor:'#212529'
+}).then((result) => {
+  /* Read more about isConfirmed, isDenied below */
+  if(result.isConfirmed){
+let GET_INDEX = moviesArr.findIndex(m => m.movieId === REMOVE_ID)
     let Removed_movie = moviesArr.splice(GET_INDEX,1)
     localStorage.setItem('moviesArr',JSON.stringify(moviesArr))
     ele.closest('.col-md-3').remove()
     snackBar(`The movie ${Removed_movie[0].movieTitle} is removed successfully!!!`)
     
+  } 
+})
+     
 }
 
 
