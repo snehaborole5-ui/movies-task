@@ -5,6 +5,9 @@ const movieTitle = document.getElementById('movieTitle')
 const movieImg = document.getElementById('movieImg')
 const movieDescription= document.getElementById('movieDescription')
 const movieRating = document.getElementById('movieRating')
+const addMovieBtn = document.getElementById('addMovieBtn');
+const updateMovieBtn = document.getElementById('updateMovieBtn');
+
 
 let moviesArr = []
 
@@ -44,6 +47,21 @@ function snackBar(msg){
 
 const movieContainer = document.getElementById('movieContainer')
 
+function onMovieEdit(ele){
+    let EDIT_ID = ele.closest('.movieCard').id 
+    localStorage.setItem('EDIT_ID',EDIT_ID)
+    let EDIT_OBJ = moviesArr.find(m => m.movieId === EDIT_ID)
+    onModalHandler()
+    movieTitle.value = EDIT_OBJ.movieTitle;
+    movieImg.value = EDIT_OBJ.movieImg;
+    movieRating.value = EDIT_OBJ.movieRating;
+    movieDescription.value = EDIT_OBJ.movieDescription;
+
+    addMovieBtn.classList.add('d-none')
+    updateMovieBtn.classList.remove('d-none')
+
+}
+
 function createMovieCards () {
     let result = ''
 moviesArr.forEach(movie => {
@@ -71,7 +89,7 @@ moviesArr.forEach(movie => {
                         </figure>
                     </div>
                    <div class="card-footer d-flex justify-content-between">
-                        <button class="btn btn-sm nfx-sec-btn" onClick="onEdit(this)">Edit</button>
+                        <button class="btn btn-sm nfx-sec-btn" onClick="onMovieEdit(this)">Edit</button>
                         <button class="btn btn-sm nfx-pri-btn" onClick="onMovieRemove(this)">Remove</button>
                     </div>
                 </div>
@@ -87,6 +105,11 @@ createMovieCards()
 function onModalHandler(){
     backDrop.classList.toggle('active')
     movieModel.classList.toggle('active')
+
+    movieForm.reset()
+
+    addMovieBtn.classList.remove('d-none')
+    updateMovieBtn.classList.add('d-none')
 }
 
 // function onModalShowHandler(){
@@ -96,14 +119,14 @@ function onModalHandler(){
 
 showModalBtn.addEventListener('click',onModalHandler)
 
-// const onModalHideHandler = () => {
-//     backDrop.classList.remove('active');
-//     movieModel.classList.remove('active');
-// }
+const onModalHideHandler = () => {
+    backDrop.classList.remove('active');
+    movieModel.classList.remove('active');
+}
 
-// closeModal.forEach(btn => {
-//     btn.addEventListener('click',onModalHideHandler)
-// })
+closeModal.forEach(btn => {
+    btn.addEventListener('click',onModalHideHandler)
+})
 
 function onMovieAddHandle(eve){
     eve.preventDefault()
@@ -146,7 +169,7 @@ div.innerHTML = `<div class="card movieCard" id="${NEW_MOVIE_OBJ.movieId}">
                         </figure>
                     </div>
                    <div class="card-footer d-flex justify-content-between">
-                        <button class="btn btn-sm nfx-sec-btn" onClick="onEdit(this)">Edit</button>
+                        <button class="btn btn-sm nfx-sec-btn" onClick="onMovieEdit(this)">Edit</button>
                         <button class="btn btn-sm nfx-pri-btn" onClick="onMovieRemove(this)">Remove</button>
                     </div>
                 </div>
@@ -178,5 +201,51 @@ let GET_INDEX = moviesArr.findIndex(m => m.movieId === REMOVE_ID)
      
 }
 
+function onMovieUpdate(){
+let UPDATE_ID = localStorage.getItem('EDIT_ID')
+let UPDATED_OBJ = {
+   movieTitle : movieTitle.value,
+        movieImg : movieImg.value,
+        movieDescription : movieDescription.value,
+        movieRating : movieRating.value,
+        movieId : UPDATE_ID
+
+}
+let GET_INDEX = moviesArr.findIndex(m => m.movieId === UPDATE_ID)
+moviesArr[GET_INDEX] = UPDATED_OBJ
+localStorage.setItem('moviesArr', JSON.stringify(moviesArr))
+let card = document.getElementById(UPDATE_ID)
+card.innerHTML = `
+            <div class="card-header d-flex justify-content-between align-items-start">
+                        <h2>
+                        ${UPDATED_OBJ.movieTitle}
+                        </h2>
+                        <span class="badge ${setMovieRating(UPDATED_OBJ.movieRating)}">
+                        ${UPDATED_OBJ.movieRating}
+                        </span>    
+                    </div>
+                    <div class="card-body p-0">
+                        <figure>
+                            <img src="${UPDATED_OBJ.movieImg}"
+                            alt="${UPDATED_OBJ.movieTitle}"
+                            title="${UPDATED_OBJ.movieTitle}">
+                            <figcaption>
+                                <h4>${UPDATED_OBJ.movieTitle}</h4>
+                                <p>
+                                    ${UPDATED_OBJ.movieDescription}
+                                </p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                   <div class="card-footer d-flex justify-content-between">
+                        <button class="btn btn-sm nfx-sec-btn" onClick="onMovieEdit(this)">Edit</button>
+                        <button class="btn btn-sm nfx-pri-btn" onClick="onMovieRemove(this)">Remove</button>
+                    </div>
+`
+onModalHandler()
+// createMovieCards()
+snackBar(`The Movie with ID ${UPDATE_ID} is updated successfully!!!`)
+}
 
 movieForm.addEventListener('submit',onMovieAddHandle)
+updateMovieBtn.addEventListener('click',onMovieUpdate)
