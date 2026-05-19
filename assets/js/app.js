@@ -71,8 +71,8 @@ moviesArr.forEach(movie => {
                         </figure>
                     </div>
                    <div class="card-footer d-flex justify-content-between">
-                        <button class="btn btn-sm nfx-sec-btn">Edit</button>
-                        <button class="btn btn-sm nfx-pri-btn">Remove</button>
+                        <button class="btn btn-sm nfx-sec-btn" onClick="onEdit(this)">Edit</button>
+                        <button class="btn btn-sm nfx-pri-btn" onClick="onMovieRemove(this)">Remove</button>
                     </div>
                 </div>
             </div>
@@ -146,8 +146,8 @@ div.innerHTML = `<div class="card movieCard" id="${NEW_MOVIE_OBJ.movieId}">
                         </figure>
                     </div>
                    <div class="card-footer d-flex justify-content-between">
-                        <button class="btn btn-sm nfx-sec-btn">Edit</button>
-                        <button class="btn btn-sm nfx-pri-btn">Remove</button>
+                        <button class="btn btn-sm nfx-sec-btn" onClick="onEdit(this)">Edit</button>
+                        <button class="btn btn-sm nfx-pri-btn" onClick="onMovieRemove(this)">Remove</button>
                     </div>
                 </div>
 `
@@ -156,6 +156,15 @@ onModalHandler()
 snackBar(`The new movie ${NEW_MOVIE_OBJ.movieTitle} added successfully!!!`)
 }
 
+function onMovieRemove(ele){
+    let REMOVE_ID = ele.closest('.movieCard').id 
+    let GET_INDEX = moviesArr.findIndex(m => m.movieId === REMOVE_ID)
+    let Removed_movie = moviesArr.splice(GET_INDEX,1)
+    localStorage.setItem('moviesArr',JSON.stringify(moviesArr))
+    ele.closest('.col-md-3').remove()
+    snackBar(`The movie ${Removed_movie[0].movieTitle} is removed successfully!!!`)
+    
+}
 
 
 movieForm.addEventListener('submit',onMovieAddHandle)
